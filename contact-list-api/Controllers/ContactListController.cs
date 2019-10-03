@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace contact_list_api.Controllers
 { 
+    // Avoid multiple classes in one file
     public class Person
     {
         [Required]
@@ -54,6 +55,7 @@ namespace contact_list_api.Controllers
             {
                 return BadRequest("Invalid Name");
             }
+            // Spec: contains, not equals
             IEnumerable<Person> results =
                 from person in contacts
                 where person.firstName.Equals(nameFilter) ||
@@ -70,6 +72,7 @@ namespace contact_list_api.Controllers
         [HttpPost]
         public IActionResult AddItem([FromHeader] Person newPerson)
         {
+            // No need to check email for null, done by ASP.NET Core automatically
             if(newPerson == null || newPerson.id < 0 || newPerson.email == null)
             {
                 return BadRequest("Invalid arguments!");
